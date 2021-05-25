@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function fetchTrailValets(){
     const trailsContainer = document.getElementById("trails-valet-container") //grabs html node
     const trailList = document.createElement("ol")
+    trailList.id = "trail-list"
     trailsContainer.append(trailList)
     fetch("http://localhost:3000/api/v1/trails") //gets data
     .then(r => r.json()) //converts to json
@@ -13,21 +14,23 @@ function fetchTrailValets(){
         data.forEach(function(trail){ //iterates over data
             const trailLocationList = document.createElement("li")
             const trailNameList = document.createElement("dl")
-            const valetLocation = document.createElement("dt")
-            const valetIssue = document.createElement("dd")
-            const valetFixed = document.createElement("dd")
             trailLocationList.innerText = trail.location
             trailNameList.innerText = trail.name
-             trail['valets'].forEach(function(valet){
+            trailLocationList.append(trailNameList)
+            trailList.append(trailLocationList)
+            trail['valets'].forEach(function(valet){
+                const valetLocation = document.createElement("dt")
+                const valetIssue = document.createElement("dd")
+                const valetFixed = document.createElement("dd")
+                const valetFixedButton = document.createElement("BUTTON")
                 valetLocation.innerText = valet.location
                 valetIssue.innerText = valet.issue
                 valetFixed.innerText = valet.fixed
+                valetFixedButton.innerText = "Needs Valet"
                 //valetIssue.append
                 //valetLocation.append(valetIssue)
-                trailNameList.append(valetLocation, valetIssue, valetFixed)
+                trailNameList.append(valetLocation, valetIssue, valetFixed, valetFixedButton)
             })
-            trailLocationList.append(trailNameList)
-            trailList.append(trailLocationList)
         })
     })
     .catch(err => console.warn(err))
@@ -61,12 +64,24 @@ function handleSubmit(event){
     .then(trail => {
         console.log(trail)
         if (trail.status === "found"){
-            //add}
+           addTrail(trail.trail)
+        }
             else {
                 alert(trail.errors)
             }
-
-
     })
     .catch(err => console.error(err))
 }
+
+function addTrail(trail){
+    const trailList = document.getElementById("trail-list")
+    const trailLocationList = document.createElement("li")
+    const trailNameList = document.createElement("dl")
+    trailLocationList.innerText = trail.location
+    trailNameList.innerText = trail.name
+    trailLocationList.append(trailNameList)
+    trailList.append(trailLocationList)
+
+}
+    
+    
