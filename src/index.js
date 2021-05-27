@@ -32,10 +32,8 @@ function handleSubmit(event){
     .then(resp => resp.json())
     .then(trailData => {
         if (trailData.status === "found"){
-            debugger
            const nt = new Trail(trailData.trail)
            nt.buildTrailHtml()
-           debugger
            trailInput.value = ""
         }
             else {
