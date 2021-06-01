@@ -12,7 +12,7 @@ function addCreateTrail(){
     const formContainer = document.getElementById("create-trail-form");
     const trailForm = document.createElement('form');
     trailForm.innerHTML = ` <input id='form-trail-name' placeholder='trail name' type='text'/><br>
-                            <input value='Create New Trail' type='submit'>`
+                            <input value='Add New Trail' type='submit'>`
     formContainer.append(trailForm)
     trailForm.addEventListener("submit", handleSubmit)
 }

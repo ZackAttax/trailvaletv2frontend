@@ -9,14 +9,14 @@ class Trail {
         //Trail.all.push(this)
     }
     buildTrailHtml(){
-        const trailList = document.getElementById("trails-valet-container")
+        const trailList = document.getElementById("trail-list")
         const trailNameListItem = document.createElement("li")
         const createValetButton = document.createElement("form")
         createValetButton.innerText = `Add issue to ${this.name}`
         createValetButton.id = `create-valet-button-for-trail-${this.id}`
         trailNameListItem.id = `trail-${this.id}`
         trailNameListItem.trailId = this.id
-        trailNameListItem.innerText = this.name
+        trailNameListItem.innerText = `Trail: ${this.name}`
         trailList.append(trailNameListItem, createValetButton)
         this.addValetToTrail()
     }
@@ -31,23 +31,23 @@ class Trail {
         trail.append(valetForm)
         valetForm.addEventListener(`submit`, this.createValet)
     }
-createValet(event){
-    event.preventDefault()
-    const valetLocation = event.target.children[0]
-    const valetIssue = event.target.children[2]
-    const trailID = this.trailID
-    console.log(trailID)
-    fetch("http://localhost:3000/valets", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        },
-        body: JSON.stringify({
-            location: valetLocation.value,
-            issue: valetIssue.value,
-            trail_id: trailID
-        })
+    createValet(event){
+        event.preventDefault()
+        const valetLocation = event.target.children[0]
+        const valetIssue = event.target.children[2]
+        const trailID = this.trailID
+        console.log(trailID)
+        fetch("http://localhost:3000/valets", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+               },
+            body: JSON.stringify({
+                location: valetLocation.value,
+                issue: valetIssue.value,
+                trail_id: trailID
+            })
     })
     .then(resp => resp.json())
     .then(valetData => {
@@ -62,6 +62,6 @@ createValet(event){
             }
     })
     .catch(err => console.error(err))
-}
+    }
 
 }
