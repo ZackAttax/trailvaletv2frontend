@@ -58,8 +58,7 @@ class Valet {
             .then(data  => {
                 if (data.status === 200) {
                 const valetItem = document.getElementById(`valet-id-${data.valet.id}`)
-                debugger
-                valetItem.children[2].innerText = "fixed"
+                valetItem.children[2].innerText = "Status: fixed"
                 valetItem.children[3].hidden = data.valet.fixed
 
                 } else {
